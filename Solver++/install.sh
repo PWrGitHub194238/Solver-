@@ -281,7 +281,7 @@ function bash_remakeDir() {
 function removeIfExists() {
 	if [ -d "$2" ]; then
 		if [ $(confirm "$1") == "y" ]; then
-			sudo rm -fr "$2"
+			rm -fr "$2"
 		fi;
 	fi
 }
@@ -296,7 +296,7 @@ function removeIfExists() {
 function bash_removeIfExists() {
 	if [ -d "$2" ]; then
 		if [ $(bash_confirm "$1") == "y" ]; then
-			sudo rm -fr "$2"
+			rm -fr "$2"
 		fi;
 	fi
 }
@@ -309,7 +309,7 @@ function bash_removeIfExists() {
 #
 function makeDirIfNotExists() {
 	if ! [ -d "$1" ]; then
-		sudo mkdir -p "$1"
+		mkdir -p "$1"
 	fi
 }
 
@@ -358,8 +358,8 @@ function installPackage() {
 	if [ $(dpkg-query -W -f='${Status}' "$1" 2>/dev/null | grep -c "ok installed") -eq 0 ];
 	then
 		if [ $(confirm "Confirm installation of package \"$1\"?") == "y" ]; then
-			sudo apt-get -yf install "$1"
-			sudo apt-get -yf install
+			apt-get -yf install "$1"
+			apt-get -yf install
 		fi;
 	else
 		echo "Package \"$1\" already has been installed."
@@ -376,8 +376,8 @@ function bash_installPackage() {
 	if [ $(dpkg-query -W -f='${Status}' "$1" 2>/dev/null | grep -c "ok installed") -eq 0 ];
 	then
 		if [ $(bash_confirm "Confirm installation of package \"$1"\"?) == "y" ]; then
-			sudo apt-get -yf install "$1"
-			sudo apt-get -yf install
+			apt-get -yf install "$1"
+			apt-get -yf install
 		fi;
 	fi
 }
@@ -434,7 +434,7 @@ function getOsi() {
 	bash_installPackage "subversion"
 
 	echo 'Checking out the coin-Osi project...'
-	sudo svn co "$coinOsiSVNBaseURL/$1" "$2"
+	svn co "$coinOsiSVNBaseURL/$1" "$2"
 
 	echo "Coin-Osi project has been saved into \"$2\"."
 	cd "$2"
@@ -463,20 +463,20 @@ function executeOsiCreation() {
 	getOsi "$osi_ver" "$osi_path"
 
 	echo "Moving headers to \"$osi_include_path\"..."
-	sudo mv "$osi_path"'include/coin/'* "$osi_include_path"
+	mv "$osi_path"'include/coin/'* "$osi_include_path"
 
 	echo "Moving libraries to \"$osi_lib_path\"..."
-	sudo mv "$osi_path"'lib/'* "$osi_lib_path"
+	mv "$osi_path"'lib/'* "$osi_lib_path"
 
 	echo 'Configuring shared libraries properties...'
 	echo "Create \"$coinOsiSharedLibConfigFile\" file in directory \"$coinOsiSharedLibConfigDir\"..."
 
 	mkdir -p "$coinOsiSharedLibConfigDir"
 
-	sudo sh -c "echo \"$osi_lib_path\" > \"$coinOsiSharedLibConfigDir/$coinOsiSharedLibConfigFile\""
+	sh -c "echo \"$osi_lib_path\" > \"$coinOsiSharedLibConfigDir/$coinOsiSharedLibConfigFile\""
 
 	echo 'Reload system configuration...'
-	sudo ldconfig
+	ldconfig
 
 	echo 'Done.'
 }
@@ -494,12 +494,12 @@ function removeOsiCreation() {
 	echo "\"$coinOsiSharedLibConfigDir$coinOsiSharedLibConfigFile\" file will be DELETED"
 
 	if [ $(bash_confirm 'Are you sure to delete this directories?') == "y" ]; then
-		sudo rm -fr "$osi_path"
-		sudo rm -fr "$osi_include_path"
-		sudo rm -fr "$osi_lib_path"
-		sudo rm -f "$coinOsiSharedLibConfigDir$coinOsiSharedLibConfigFile"
+		rm -fr "$osi_path"
+		rm -fr "$osi_include_path"
+		rm -fr "$osi_lib_path"
+		rm -f "$coinOsiSharedLibConfigDir$coinOsiSharedLibConfigFile"
 		echo 'Reload system configuration...'
-		sudo ldconfig
+		ldconfig
 		echo 'Done.'
 	fi;
 }
@@ -534,7 +534,7 @@ function makeLog4cxx() {
 	./configure
 	make
 	make check
-	sudo make install
+	make install
 	cd ../
 }
 

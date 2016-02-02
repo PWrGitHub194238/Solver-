@@ -8,6 +8,8 @@
 #ifndef TYPEDEFS_HPP_
 #define TYPEDEFS_HPP_
 
+#include <utility>
+
 typedef double ParamValue;
 typedef unsigned int ParamIdx;
 typedef unsigned int ParamDimIdx;
@@ -25,7 +27,7 @@ typedef std::pair<VarValue, VarValue> VarBounds;
  * Test doc
  */
 enum SolverInterface {
-	GLPK//!< GLPK
+	GLPK //!< GLPK
 };
 
 enum Bounds {
@@ -37,7 +39,7 @@ enum Bounds {
  */
 enum ValueType {
 	DOUBLE, //!< DOUBLE
-	INTEGER,//!< INTEGER
+	INTEGER, //!< INTEGER
 	BINARY  //!< BINARY
 };
 
